@@ -167,18 +167,16 @@ class Address:
 
             return [tokens[i] for (i, _) in longest_seq], [types[i] for (i, _) in longest_seq]
 
-    # Достает нужнные маппинги из токенов
     def extract_other_tokens(self, string):
         address_types = self.__inverse_dict(fias_types.address_types)
         dict_ = {}
-        # Делим строку строку по запятой и токенизируем каждую часть в массив
         tokens = [self.__tokenize(i) for i in string.split(',')]
         for token in tokens:
             counter = 0
             for tag in range(len(token)-1):
                 tag = tag-counter
                 if len(token)-1 >= 2:
-                    if token[tag+1] == "-":   # Объединение дефисов в массиве
+                    if token[tag+1] == "-":
                         try:
                             token[tag] = token[tag]+token[tag+1]+token[tag+2]
                             counter += 2
@@ -186,17 +184,14 @@ class Address:
                         except IndexError:
                             pass
 
-        #print(tokens)
         for token in tokens:
             types = [address_types.get(x, self.__get_token_type(x)) for x in token]
-            #print(types)
             if len(types) > 1:
-                #print(types)
                 for index, word in enumerate(types):
                     if word not in ("не распознано", "число"):
                         del token[index]
                         dict_[word] = " ".join(token)
-                        break  # 2 и более типов указанные между запятыми ломают эту штуку
+                        break
             elif len(types) == 1:
                 if types[0] not in ("не распознано", "число"):
                     del token[0]
@@ -218,15 +213,14 @@ class Address:
         house_types_inv = self.house_types_inv
 
         for i, token in enumerate(tokens):
-            # token = re.sub('/', '', token)
-            if types[i] == "число":     # Классифицируем первые 3 числа как дом, корпус и квартиру
+            if types[i] == "число":
                 if "дом" not in types:
                     types[i] = "дом"
                 elif "корпус" not in types:
                     types[i] = "корпус"
                 elif "квартира" not in types:
                     types[i] = "квартира"
-                elif types[i - 1] in fias_types.house_signs and types[i - 1] not in ('литера', 'дробь'):  # [0]
+                elif types[i - 1] in fias_types.house_signs and types[i - 1] not in ('литера', 'дробь'):
                     types[i] = types[i - 1]
                 elif i >= 2 and types[i - 1] == 'дробь':
                     types[i] = types[i - 2]

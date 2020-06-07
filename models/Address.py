@@ -50,7 +50,7 @@ class Address:
         return final_address
 
     def __clear_characters(self, preparing_address: str):
-        for char in clear_characters.clear_characters:
+        for char in clear_characters:
             preparing_address = preparing_address.replace(char, ' ')
 
         return re.sub(r"[\d]+", ' \g<0> ', preparing_address)
