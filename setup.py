@@ -6,5 +6,6 @@ setup(
     author="Дедовщина",
     description="Исходный код задания для кейса от Сбербанка",
     packages=find_packages(),
-    python_requires='>=3.8.3'
+    python_requires='>=3.8.3',
+    url="https://github.com/NtZyr/digital-hack-sber"
 )
