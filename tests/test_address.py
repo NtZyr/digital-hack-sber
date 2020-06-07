@@ -85,7 +85,7 @@ class TestAddress(unittest.TestCase):
 
         print(address.extract_house_tokens())
 
-    def test_test(self):
+    def test_address_string(self):
         self.set_addresses()
 
         test_address = self.rigth_addresses[1]
