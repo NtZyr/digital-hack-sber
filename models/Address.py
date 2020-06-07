@@ -159,7 +159,7 @@ class Address:
                     del tokens[i], types[i]
                     j += 1
 
-            types_bin = [0 if x == '"не распознано"' else 1 for x in types]
+            types_bin = [0 if x == "не распознано" else 1 for x in types]
             array = list((list(y) for (x, y) in itertools.groupby((enumerate(types_bin)), operator.itemgetter(1)) if x == 1))
             if len(array) == 0:
                 return [], []
